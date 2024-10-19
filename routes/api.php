@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\RoutesController;
 use App\Http\Controllers\ManutencaoController;
 use App\Http\Controllers\ReservaController;
 use App\Http\Controllers\VeiculoController;
@@ -18,6 +19,8 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+
+Route::get('/home', [RoutesController::class, 'home']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
