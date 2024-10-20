@@ -72,12 +72,11 @@ button {
     border-radius: 4px;
     cursor: pointer;
     background-color: var(--primary-color);
-    color: white;
+    color: var(--text-dark);
     transition: 0.5s;
 }
 
 button:hover {
     transform: scale(1.1);
     background-color: white;
-    color: var(--text-dark);
 }

@@ -29,3 +29,23 @@ Route::get('/login', function () {
 Route::get('/login/entrar', function () {
     return view('login.entrar');
 });
+
+Route::get('/admin', function () {
+    return view('admin.index');
+});
+
+Route::get('/categorias', function () {
+    return view('admin.categorias');
+});
+
+Route::get('/equipe', function () {
+    return view('admin.equipe');
+});
+
+Route::get('/reservas', function () {
+    return view('admin.reservas');
+});
+
+Route::get('/veiculos', function () {
+    return view('admin.veiculos');
+});
