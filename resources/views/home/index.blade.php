@@ -15,7 +15,8 @@
     <nav>
         <div class="nav__header">
             <div class="nav__logo">
-                <a href="#">RENTAL</a>
+                <img src="{{ asset('assets/images/logo_brand.svg') }}" alt="Logo">
+                <a>Rental</a>
             </div>
             <div class="nav__menu__btn" id="menu-btn">
                 <i class="ri-menu-line"></i>
@@ -23,112 +24,40 @@
         </div>
         <ul class="nav__links" id="nav-links">
             <li><a href="#home">Home</a></li>
-            <li><a href="#rent">Rent</a></li>
-            <li><a href="#ride">Ride</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li><a href="#rent">Alugue</a></li>
+            <li><a href="#contact">Contate-nos</a></li>
         </ul>
         <div class="nav__btn">
-            <button class="btn">Get Started</button>
+            <button class="btn" onclick="window.location.href = '/login'">Alugue agora</button>
         </div>
     </nav>
     <div class="header__container" id="home">
-        <h1>PREMIUM CAR RENTAL</h1>
-        <form action="/">
-            <div class="input__group">
-                <label for="location">Pick up & Return location</label>
-                <input
-                    type="text"
-                    name="location"
-                    id="location"
-                    placeholder="Dallas, Texas"
-                />
-            </div>
-            <div class="input__group">
-                <label for="start">Start</label>
-                <input
-                    type="text"
-                    name="start"
-                    id="start"
-                    placeholder="Aug 16, 10:00 AM"
-                />
-            </div>
-            <div class="input__group">
-                <label for="stop">Stop</label>
-                <input
-                    type="text"
-                    name="stop"
-                    id="stop"
-                    placeholder="Aug 18, 10:00 PM"
-                />
-            </div>
-            <button class="btn">
-                <i class="ri-search-line"></i>
-            </button>
-        </form>
+        <h1>Aluguel Premium</h1>
         <img src="{{ asset('assets/images/header.png') }}" alt="header" />
     </div>
-    <a href="#about" class="scroll__down">
-        <i class="ri-arrow-down-line"></i>
-    </a>
 </header>
 
-<section class="section__container range__container" id="about">
-    <h2 class="section__header">WIDE RANGE OF VEHICLES</h2>
-    <div class="range__grid">
-        <div class="range__card">
-            <img src="{{ asset('assets/images/range-1.jpg') }}" alt="range" />
-            <div class="range__details">
-                <h4>CARS</h4>
-                <a href="#"><i class="ri-arrow-right-line"></i></a>
-            </div>
-        </div>
-        <div class="range__card">
-            <img src="{{ asset('assets/images/range-2.jpg') }}" alt="range" />
-            <div class="range__details">
-                <h4>SUVS</h4>
-                <a href="#"><i class="ri-arrow-right-line"></i></a>
-            </div>
-        </div>
-        <div class="range__card">
-            <img src="{{ asset('assets/images/range-3.jpg') }}" alt="range" />
-            <div class="range__details">
-                <h4>VANS</h4>
-                <a href="#"><i class="ri-arrow-right-line"></i></a>
-            </div>
-        </div>
-        <div class="range__card">
-            <img src="{{ asset('assets/images/range-4.jpg') }}" alt="range" />
-            <div class="range__details">
-                <h4>ELECTRIC</h4>
-                <a href="#"><i class="ri-arrow-right-line"></i></a>
-            </div>
-        </div>
-    </div>
-</section>
 
 <section class="section__container location__container" id="rent">
     <div class="location__image">
         <img src="{{ asset('assets/images/location.png') }}" alt="location" />
     </div>
     <div class="location__content">
-        <h2 class="section__header">FIND CAR IN YOUR LOCATIONS</h2>
+        <h2 class="section__header">Encontre o carro perfeito perto de você</h2>
         <p>
-            Discover the perfect vehicle tailored to your needs, wherever you are.
-            Our 'Find Car in Your Locations' feature allows you to effortlessly
-            search and select from our premium fleet available near you. Whether
-            you're looking for a luxury sedan, a spacious SUV, or a sporty
-            convertible, our easy-to-use tool ensures you find the ideal car for
-            your journey. Simply enter your location, and let us connect you with
-            top-tier vehicles ready for rental.
+            Descubra o veículo perfeito e adaptado às suas necessidades, onde quer que esteja.
+            Nosso recurso 'Encontrar carro em seus locais' permite que você encontre facilmente
+            pesquise e selecione entre nossa frota premium disponível perto de você. Se
+            você está procurando um sedã de luxo, um SUV espaçoso ou um esportivo
+            conversível, nossa ferramenta fácil de usar garante que você encontre o carro ideal para
+            sua jornada. Basta inserir sua localização e deixe-nos conectá-lo com
+            veículos de primeira linha prontos para locação.
         </p>
-        <div class="location__btn">
-            <button class="btn">Find a Location</button>
-        </div>
     </div>
 </section>
 
 <section class="select__container" id="ride">
-    <h2 class="section__header">PICK YOUR DREAM CAR TODAY</h2>
+    <h2 class="section__header">Escolha o carro do seus sonhos</h2>
     <!-- Slider main container -->
     <div class="swiper">
         <!-- Additional required wrapper -->
@@ -137,116 +66,26 @@
             <div class="swiper-slide">
                 <div class="select__card">
                     <img src="{{ asset('assets/images/select-1.png') }}" alt="select" />
-                    <div class="select__info">
-                        <div class="select__info__card">
-                            <span><i class="ri-speed-up-line"></i></span>
-                            <h4>200 <span>km/h</span></h4>
-                        </div>
-                        <div class="select__info__card">
-                            <span><i class="ri-settings-5-line"></i></span>
-                            <h4>6 <span>speed</span></h4>
-                        </div>
-                        <div class="select__info__card">
-                            <span><i class="ri-roadster-line"></i></span>
-                            <h4>5 <span>seats</span></h4>
-                        </div>
-                        <div class="select__info__card">
-                            <span><i class="ri-signpost-line"></i></span>
-                            <h4>15 <span>milage</span></h4>
-                        </div>
-                    </div>
                 </div>
             </div>
             <div class="swiper-slide">
                 <div class="select__card">
                     <img src="{{ asset('assets/images/select-2.png') }}" alt="select" />
-                    <div class="select__info">
-                        <div class="select__info__card">
-                            <span><i class="ri-speed-up-line"></i></span>
-                            <h4>215 <span>km/h</span></h4>
-                        </div>
-                        <div class="select__info__card">
-                            <span><i class="ri-settings-5-line"></i></span>
-                            <h4>6 <span>speed</span></h4>
-                        </div>
-                        <div class="select__info__card">
-                            <span><i class="ri-roadster-line"></i></span>
-                            <h4>5 <span>seats</span></h4>
-                        </div>
-                        <div class="select__info__card">
-                            <span><i class="ri-signpost-line"></i></span>
-                            <h4>16 <span>milage</span></h4>
-                        </div>
-                    </div>
                 </div>
             </div>
             <div class="swiper-slide">
                 <div class="select__card">
                     <img src="{{ asset('assets/images/select-3.png') }}" alt="select" />
-                    <div class="select__info">
-                        <div class="select__info__card">
-                            <span><i class="ri-speed-up-line"></i></span>
-                            <h4>306 <span>km/h</span></h4>
-                        </div>
-                        <div class="select__info__card">
-                            <span><i class="ri-settings-5-line"></i></span>
-                            <h4>6 <span>speed</span></h4>
-                        </div>
-                        <div class="select__info__card">
-                            <span><i class="ri-roadster-line"></i></span>
-                            <h4>5 <span>seats</span></h4>
-                        </div>
-                        <div class="select__info__card">
-                            <span><i class="ri-signpost-line"></i></span>
-                            <h4>12 <span>milage</span></h4>
-                        </div>
-                    </div>
                 </div>
             </div>
             <div class="swiper-slide">
                 <div class="select__card">
                     <img src="{{ asset('assets/images/select-4.png') }}" alt="select" />
-                    <div class="select__info">
-                        <div class="select__info__card">
-                            <span><i class="ri-speed-up-line"></i></span>
-                            <h4>350 <span>km/h</span></h4>
-                        </div>
-                        <div class="select__info__card">
-                            <span><i class="ri-settings-5-line"></i></span>
-                            <h4>6 <span>speed</span></h4>
-                        </div>
-                        <div class="select__info__card">
-                            <span><i class="ri-roadster-line"></i></span>
-                            <h4>2 <span>seats</span></h4>
-                        </div>
-                        <div class="select__info__card">
-                            <span><i class="ri-signpost-line"></i></span>
-                            <h4>08 <span>milage</span></h4>
-                        </div>
-                    </div>
                 </div>
             </div>
             <div class="swiper-slide">
                 <div class="select__card">
                     <img src="{{ asset('assets/images/select-5.png') }}" alt="select" />
-                    <div class="select__info">
-                        <div class="select__info__card">
-                            <span><i class="ri-speed-up-line"></i></span>
-                            <h4>254 <span>km/h</span></h4>
-                        </div>
-                        <div class="select__info__card">
-                            <span><i class="ri-settings-5-line"></i></span>
-                            <h4>6 <span>speed</span></h4>
-                        </div>
-                        <div class="select__info__card">
-                            <span><i class="ri-roadster-line"></i></span>
-                            <h4>5 <span>seats</span></h4>
-                        </div>
-                        <div class="select__info__card">
-                            <span><i class="ri-signpost-line"></i></span>
-                            <h4>10 <span>milage</span></h4>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

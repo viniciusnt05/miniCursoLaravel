@@ -69,7 +69,6 @@ nav {
     width: 100%;
     z-index: 9;
 }
-
 .nav__header {
     padding: 1rem;
     width: 100%;
@@ -78,7 +77,14 @@ nav {
     justify-content: space-between;
     background-color: var(--primary-color);
 }
-
+.nav__header img {
+    width: 30%;
+}
+.nav__logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
 .nav__logo a {
     font-size: 1.5rem;
     font-weight: 700;

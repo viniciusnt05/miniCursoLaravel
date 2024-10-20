@@ -63,36 +63,33 @@
                 <div class="filter-title">
                     <h3>Buscar</h3>
                     <label>
-                        <input type="text" placeholder="Nome da categoria">
-                        <button class="cleanBtn">Limpar</button>
+                        <input type="text" id="searchInput" placeholder="Nome da categoria">
+                        <button class="cleanBtn" id="clearBtn">Limpar</button>
                     </label>
                 </div>
                 <div class="newItem">
-                    <button class="filterBtn">Nova categoria</button>
+                    <button id="newItem" class="filterBtn">Nova categoria</button>
                 </div>
             </div>
         </div>
 
         <div class="table-data">
             <div class="order">
-                <div class="head">
-                    <h3>Recent Orders</h3>
-                </div>
                 <table>
                     <thead>
                     <tr>
-                        <th>User</th>
-                        <th>Date Order</th>
-                        <th>Status</th>
+                        <th>Nome</th>
+                        <th>Descrição</th>
+                        <th colspan="2">Ações</th>
                     </tr>
                     </thead>
-                    <tbody>
-
-                    </tbody>
                 </table>
             </div>
         </div>
     </main>
 </section>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{ asset('assets/js/categorias.js') }}"></script>
 </body>
 </html>

@@ -23,6 +23,11 @@ class CategoriaController extends Controller
         return Categoria::find($id);
     }
 
+    public function search($nome)
+    {
+        return Categoria::where('nome', 'LIKE', $nome)->get();
+    }
+
     public function update(Request $request, $id)
     {
         $categoria = Categoria::findOrFail($id);

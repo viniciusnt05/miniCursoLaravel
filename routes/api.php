@@ -62,5 +62,6 @@ Route::prefix('/categorias')->group(function () {
     Route::post('/', [CategoriaController::class, 'store']);
     Route::patch('/{id}', [CategoriaController::class, 'update']);
     Route::delete('/{id}', [CategoriaController::class, 'destroy']);
+    Route::get('/search/{nome}', [CategoriaController::class, 'search']);
 });
 

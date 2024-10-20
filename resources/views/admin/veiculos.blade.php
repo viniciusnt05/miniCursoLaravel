@@ -58,41 +58,41 @@
 <section id="content">
     <main>
         <div class="head-title">
-            <h1>Categorias</h1>
+            <h1>Veículos</h1>
             <div class="filter">
                 <div class="filter-title">
                     <h3>Buscar</h3>
                     <label>
-                        <input type="text" placeholder="Nome da categoria">
+                        <input type="text" placeholder="Nome do veículo">
                         <button class="cleanBtn">Limpar</button>
                     </label>
                 </div>
                 <div class="newItem">
-                    <button class="filterBtn">Nova categoria</button>
+                    <button id="newItem" class="filterBtn">Novo veículo</button>
                 </div>
             </div>
         </div>
 
         <div class="table-data">
             <div class="order">
-                <div class="head">
-                    <h3>Recent Orders</h3>
-                </div>
                 <table>
                     <thead>
                     <tr>
-                        <th>User</th>
-                        <th>Date Order</th>
+                        <th>Categoria</th>
+                        <th>Marca</th>
+                        <th>Modelo</th>
+                        <th>Ano</th>
+                        <th>Placa</th>
                         <th>Status</th>
                     </tr>
                     </thead>
-                    <tbody>
-
-                    </tbody>
                 </table>
             </div>
         </div>
     </main>
 </section>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{ asset('assets/js/veiculos.js') }}"></script>
 </body>
 </html>
