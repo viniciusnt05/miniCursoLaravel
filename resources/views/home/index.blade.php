@@ -28,7 +28,7 @@
             <li><a href="#contact">Contate-nos</a></li>
         </ul>
         <div class="nav__btn">
-            <button class="btn" onclick="window.location.href = '/login'">Alugue agora</button>
+            <button class="btn" onclick="">Alugue agora</button>
         </div>
     </nav>
     <div class="header__container" id="home">

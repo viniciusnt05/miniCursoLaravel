@@ -20,7 +20,7 @@ return new class extends Migration
             $table->enum('status', ['confirmada', 'cancelada', 'concluída'])->default('confirmada');
             $table->decimal('valor_total', 10, 2);
 
-            $table->foreign('id_cliente')->references('id')->on('clientes');
+            $table->foreign('id_cliente')->references('id')->on('usuarios');
             $table->foreign('id_veiculo')->references('id')->on('veiculos');
 
             $table->timestamps();

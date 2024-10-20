@@ -22,7 +22,7 @@
             <h2 class="title title-second">Ainda não é cliente?</h2>
             <p class="description description-second">Descubra a liberdade de dirigir o carro ideal – fácil, rápido e do seu jeito!</p>
 
-            <form class="form" action="/newClient" method="post">
+            <form class="form" action="/api/usuarios" method="post">
                 <label class="label-input" for="">
                     <i class="far fa-user icon-modify"></i>
                     <input name="nome" type="text" placeholder="Nome" required>
@@ -36,6 +36,11 @@
                 <label name="email" class="label-input" for="">
                     <i class="far fa-envelope icon-modify"></i>
                     <input name="email" type="email" placeholder="Email" required>
+                </label>
+
+                <label name="data_nascimento" class="label-input" for="">
+                    <i class="far fa-envelope icon-modify"></i>
+                    <input name="data_nascimento" type="date" placeholder="data_nascimento" required>
                 </label>
 
                 <label name="senha" class="label-input" for="">
@@ -133,6 +138,7 @@
             history.replaceState(null, '', newUrl);
         });
     }
+
 </script>
 </body>
 </html>

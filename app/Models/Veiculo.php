@@ -16,6 +16,8 @@ class Veiculo extends Model
         'marca',
         'modelo',
         'ano_fabricacao',
+        'img',
+        'valor',
         'placa',
         'status',
     ];

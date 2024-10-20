@@ -73,3 +73,50 @@ document.getElementById('newItem').addEventListener('click', async () => {
         }
     });
 });
+
+// Função para carregar os veículos da API e preencher a tabela
+async function carregarVeiculos() {
+    try {
+        const response = await fetch('/api/veiculos', {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error('Erro ao buscar veículos');
+        }
+
+        const veiculos = await response.json();
+
+        // Preenche a tabela com os veículos
+        const tabelaVeiculos = document.querySelector('.table-data .order table tbody');
+        tabelaVeiculos.innerHTML = ''; // Limpa a tabela antes de adicionar os dados
+
+        veiculos.forEach((veiculo) => {
+            const row = `
+                <tr>
+                    <td>${veiculo.categoria.nome}</td>
+                    <td>${veiculo.marca}</td>
+                    <td>${veiculo.modelo}</td>
+                    <td>${veiculo.ano_fabricacao}</td>
+                    <td>${veiculo.placa}</td>
+                    <td>R$ ${parseFloat(veiculo.valor).toFixed(2)}</td>
+                    <td><img src="/storage/${veiculo.img}" alt="${veiculo.modelo}" style="width: 50px; height: 50px;"></td>
+                    <td>${veiculo.status}</td>
+                </tr>
+            `;
+            tabelaVeiculos.insertAdjacentHTML('beforeend', row);
+        });
+    } catch (error) {
+        Swal.fire('Erro', error.message, 'error');
+        console.error('Erro:', error);
+    }
+}
+
+// Chama a função para carregar os veículos ao carregar a página
+document.addEventListener('DOMContentLoaded', () => {
+    carregarVeiculos();
+});
+
