@@ -1,0 +1,83 @@
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    width: 80vw;
+    padding: 20px;
+    background-color: var(--second-color-dark);
+    gap: 20px;
+    box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    color: white;
+}
+
+.logo {
+    max-width: 30%;
+    margin-bottom: 20px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 400px;
+    gap: 15px;
+}
+
+.label-input {
+    display: block;
+    width: 100%;
+}
+
+.label-input input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.forgot-password {
+    text-align: center;
+    margin-bottom: 10px;
+    display: block;
+    font-size: 10px;
+    transition: 0.5s;
+    color: white;
+}
+
+.forgot-password:hover {
+    transform: scale(1.1);
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+button {
+    width: 48%;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: var(--primary-color);
+    color: white;
+    transition: 0.5s;
+}
+
+button:hover {
+    transform: scale(1.1);
+    background-color: white;
+    color: var(--text-dark);
+}
