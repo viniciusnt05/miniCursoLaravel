@@ -30,12 +30,12 @@ class VeiculoController extends Controller
     public function store(StoreUpdateVeiculoRequest $request)
     {
         // Processa o upload da imagem, se houver
-//        $imgPath = null;
-//        if ($request->hasFile('img') && $request->file('img')->isValid()) {
-//            $img = $request->file('img');
-//            $imgName = Str::slug($request->modelo) . '.' . $img->getClientOriginalExtension();
-//            $imgPath = $img->storeAs('veiculos', $imgName, 'public'); // Salva em public/veiculos
-//        }
+        $imgPath = null;
+        if ($request->hasFile('img') && $request->file('img')->isValid()) {
+            $img = $request->file('img');
+            $imgName = Str::slug($request->modelo) . '.' . $img->getClientOriginalExtension();
+            $imgPath = $img->storeAs('veiculos', $imgName, 'public'); // Salva em public/veiculos
+        }
 
         // Cria um novo veículo e atribui os campos
         $veiculo = new Veiculo;
@@ -46,7 +46,7 @@ class VeiculoController extends Controller
         $veiculo->placa = $request->placa;
         $veiculo->status = $request->status;
         $veiculo->valor = $request->valor;
-//        $veiculo->img = $imgPath; // Atribui o caminho da imagem
+        $veiculo->img = $imgPath; // Atribui o caminho da imagem
 
         $veiculo->save();
 

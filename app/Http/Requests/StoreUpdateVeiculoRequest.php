@@ -27,9 +27,9 @@ class StoreUpdateVeiculoRequest extends FormRequest
             'modelo' => 'required|string|max:255',
             'ano_fabricacao' => 'required|integer|min:1886',
             'placa' => 'required|string|max:10|unique:veiculos,placa',
-            'status' => 'required|in:disponível,alugado,em manutenção',
+            'status' => 'required|in:disponivel,alugado,manutencao',
             'valor' => 'required|numeric|min:0', // Adicionando validação para o campo 'valor'
-//            'img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Campo de imagem
+            'img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Campo de imagem
         ];
 
         // Regras de validação diferentes para a atualização

@@ -11,8 +11,16 @@ class ReservaController extends Controller
     public function index()
     {
         $reservas = Reserva::with('usuario', 'veiculo')->get();
-        return response()->json($reservas);
+
+        // Adiciona o número total de reservas
+        $numero_total = $reservas->count();
+
+        return response()->json([
+            'reservas' => $reservas,
+            'numero_total' => $numero_total,
+        ]);
     }
+
 
     // Mostra uma reserva específica por ID
     public function show($id)

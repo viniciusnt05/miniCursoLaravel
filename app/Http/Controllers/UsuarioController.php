@@ -13,8 +13,14 @@ class UsuarioController extends Controller
     {
         // Recupera todos os usuários do banco de dados
         $clientes = Usuario::all();
+
+        $numero_total = $clientes->count();
+
         // Retorna a lista de clientes em formato JSON
-        return response()->json($clientes);
+        return response()->json([
+            'reservas' => $clientes,
+            'numero_total' => $numero_total,
+        ]);
     }
 
     // Mostra um cliente específico por ID

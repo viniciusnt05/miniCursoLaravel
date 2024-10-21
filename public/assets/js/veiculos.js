@@ -3,9 +3,14 @@ document.getElementById('newItem').addEventListener('click', async () => {
         method: 'GET',
     }).then(response => response.json())
         .catch(error => {
+            console.error('Erro ao carregar categorias:', error);
             Swal.fire('Erro', 'Não foi possível carregar as categorias.', 'error');
-            console.error('Erro:', error);
         });
+
+    if (!categorias) {
+        console.error('Nenhuma categoria encontrada ou falha na requisição.');
+        return;
+    }
 
     const options = categorias.map(
         (cat) => `<option value="${cat.id}">${cat.nome}</option>`
@@ -22,6 +27,7 @@ document.getElementById('newItem').addEventListener('click', async () => {
             <input type="text" id="modelo" class="swal2-input" placeholder="Modelo">
             <input type="number" id="ano_fabricacao" class="swal2-input" placeholder="Ano de Fabricação">
             <input type="text" id="placa" class="swal2-input" placeholder="Placa">
+            <input type="file" id="img" class="swal2-input" accept="image/*">
             <select id="status" class="swal2-input">
                 <option value="" disabled selected>Status do veículo</option>
                 <option value="disponivel">Disponível</option>
@@ -43,32 +49,56 @@ document.getElementById('newItem').addEventListener('click', async () => {
             const modelo = document.getElementById('modelo').value.trim();
             const ano_fabricacao = document.getElementById('ano_fabricacao').value;
             const placa = document.getElementById('placa').value.trim();
+            const img = document.getElementById('img').files[0];
             const status = document.getElementById('status').value;
 
-            if (!id_categoria || !marca || !modelo || !ano_fabricacao || !placa) {
+            if (!id_categoria || !marca || !modelo || !ano_fabricacao || !placa || !img || !status) {
                 Swal.showValidationMessage('Preencha todos os campos');
                 return false;
             }
 
-            return { id_categoria, marca, modelo, ano_fabricacao, placa, status };
+            return { id_categoria, marca, modelo, ano_fabricacao, placa, img, status };
         }
     }).then((result) => {
         if (result.isConfirmed) {
             const data = result.value;
+
+            // Cria um objeto FormData para envio multipart
+            const formData = new FormData();
+            formData.append('id_categoria', data.id_categoria);
+            formData.append('marca', data.marca);
+            formData.append('modelo', data.modelo);
+            formData.append('ano_fabricacao', data.ano_fabricacao);
+            formData.append('placa', data.placa);
+            formData.append('img', data.img);  // Arquivo de imagem
+            formData.append('status', data.status);
+
+            console.log('Dados a serem enviados:', formData);
+
+            // Envia a requisição com FormData
             fetch('/api/veiculos', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
+                body: formData,
             })
-                .then(response => response.json())
-                .then(() => {
+                .then(async response => {
+                    console.log('Resposta bruta:', response);
+                    if (!response.ok) {
+                        const errorData = await response.json().catch(() => {
+                            console.error('Erro ao analisar a resposta JSON:', response);
+                            throw new Error('Resposta inesperada do servidor.');
+                        });
+                        console.error('Erro na resposta da API:', errorData);
+                        throw new Error(errorData.message || 'Erro desconhecido ao criar o veículo.');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Resposta bem-sucedida:', data);
                     Swal.fire('Sucesso', 'Veículo criado com sucesso!', 'success');
                 })
                 .catch((error) => {
-                    Swal.fire('Erro', 'Ocorreu um erro ao criar o veículo.', 'error');
-                    console.error('Erro:', error);
+                    console.error('Erro ao criar veículo:', error);
+                    Swal.fire('Erro', error.message || 'Ocorreu um erro ao criar o veículo.', 'error');
                 });
         }
     });
