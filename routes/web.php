@@ -49,3 +49,7 @@ Route::get('/reservas', function () {
 Route::get('/veiculos', function () {
     return view('admin.veiculos');
 });
+
+Route::get('/veiculo/detalhes', function () {
+    return view('rent.carro');
+});

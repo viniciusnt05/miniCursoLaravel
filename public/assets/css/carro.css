@@ -1,0 +1,138 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: var(--main-font) !important;
+    background-color: #f5f5f5;
+}
+
+header {
+    background-color: var(--second-color-dark);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.nav__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+}
+
+.nav__logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--header-font);
+    text-align: center;
+}
+
+.nav__logo img {
+    width: 80px;
+    height: auto;
+    border-radius: 5px;
+}
+
+.nav__logo a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.nav__links {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    list-style: none;
+    flex: 1;
+    margin: 0;
+    padding: 0;
+}
+
+.nav__links a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 1rem;
+    transition: color 0.3s;
+}
+
+.nav__links a:hover {
+    color: var(--primary-color);
+}
+
+.nav__btn {
+    margin-left: auto;
+}
+
+.btn {
+    background-color: var(--primary-color);
+    color: var(--text-dark);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    transform: scale(1.1);
+    transition: 0.5s;
+}
+
+.car-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 2rem;
+    max-width: 600px;
+    margin: 2rem auto;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.car-details img {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    border-radius: 8px;
+}
+
+.details {
+    text-align: center;
+}
+
+.details h1 {
+    margin: 0;
+    font-size: 2rem;
+    color: #333;
+}
+
+.details p {
+    margin: 0.5rem 0;
+    font-size: 1rem;
+    color: #666;
+}
+
+.btn-rent {
+    background-color: var(--second-color-dark);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+
+.btn-rent:hover {
+    transform: scale(1.1);
+    transition: 0.5s;
+}
+
+#title {
+    color: var(--text-dark);
+    text-align: center;
+    margin: 20px 0;
+}
