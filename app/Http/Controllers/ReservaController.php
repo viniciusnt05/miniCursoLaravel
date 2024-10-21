@@ -3,21 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\Reserva;
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreUpdateReservaRequest;
 
 class ReservaController extends Controller
 {
     // Lista todas as reservas
     public function index()
     {
-        $reservas = Reserva::with('cliente', 'veiculo')->get();
+        $reservas = Reserva::with('usuario', 'veiculo')->get();
         return response()->json($reservas);
     }
 
     // Mostra uma reserva específica por ID
     public function show($id)
     {
-        $reserva = Reserva::with('cliente', 'veiculo')->find($id);
+        $reserva = Reserva::with('usuario', 'veiculo')->find($id);
         if (!$reserva) {
             return response()->json(['message' => 'Reserva não encontrada'], 404);
         }
@@ -25,43 +25,33 @@ class ReservaController extends Controller
     }
 
     // Cria uma nova reserva
-    public function store(Request $request)
+    public function store(StoreUpdateReservaRequest $request)
     {
-        // Valida os dados da reserva
-        $request->validate([
-            'id_cliente' => 'required|exists:clientes,id',
-            'id_veiculo' => 'required|exists:veiculos,id',
-            'data_retirada' => 'required|date',
-            'data_devolucao_prevista' => 'required|date|after_or_equal:data_retirada',
-            'status' => 'required|in:confirmada,cancelada,concluída',
-            'valor_total' => 'required|numeric|min:0',
-        ]);
+        // Cria uma nova reserva e atribui os campos
+        $reserva = new Reserva;
+        $reserva->id_cliente = $request->id_cliente;
+        $reserva->id_veiculo = $request->id_veiculo;
+        $reserva->data_retirada = $request->data_retirada;
+        $reserva->data_devolucao_prevista = $request->data_devolucao_prevista;
+        $reserva->status = $request->status;
+        $reserva->valor_total = $request->valor_total;
 
-        // Cria e salva a reserva no banco
-        $reserva = Reserva::create($request->all());
+        $reserva->save();
+
+        // Retorna a resposta JSON
         return response()->json($reserva, 201);
     }
 
     // Atualiza uma reserva existente
-    public function update(Request $request, $id)
+    public function update(StoreUpdateReservaRequest $request, $id)
     {
         $reserva = Reserva::find($id);
         if (!$reserva) {
             return response()->json(['message' => 'Reserva não encontrada'], 404);
         }
 
-        // Valida os dados de atualização
-        $request->validate([
-            'id_cliente' => 'exists:clientes,id',
-            'id_veiculo' => 'exists:veiculos,id',
-            'data_retirada' => 'date',
-            'data_devolucao_prevista' => 'date|after_or_equal:data_retirada',
-            'status' => 'in:confirmada,cancelada,concluída',
-            'valor_total' => 'numeric|min:0',
-        ]);
-
         // Atualiza os dados da reserva
-        $reserva->update($request->all());
+        $reserva->update($request->validated());
         return response()->json($reserva, 200);
     }
 

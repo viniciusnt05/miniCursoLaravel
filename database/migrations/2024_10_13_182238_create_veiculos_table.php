@@ -20,7 +20,7 @@ return new class extends Migration
             $table->float('valor');
             $table->longText('img')->nullable();
             $table->string('placa')->unique();
-            $table->enum('status', ['disponível', 'alugado', 'manutencao'])->default('disponível');
+            $table->enum('status', ['disponivel', 'alugado', 'manutencao'])->default('disponivel');
 
             $table->foreign('id_categoria')->references('id')->on('categorias');
 

@@ -24,9 +24,9 @@ document.getElementById('newItem').addEventListener('click', async () => {
             <input type="text" id="placa" class="swal2-input" placeholder="Placa">
             <select id="status" class="swal2-input">
                 <option value="" disabled selected>Status do veículo</option>
-                <option value="disponível">Disponível</option>
+                <option value="disponivel">Disponível</option>
                 <option value="alugado">Alugado</option>
-                <option value="em manutenção">Em Manutenção</option>
+                <option value="manutencao">Em Manutenção</option>
             </select>
         `,
         confirmButtonText: 'Salvar',

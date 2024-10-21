@@ -17,31 +17,31 @@
     <ul class="side-menu top">
         <li>
             <a href="/admin">
-                <i class='bx bxs-dashboard' ></i>
+                <i class='bx bxs-dashboard'></i>
                 <span class="text">Dashboard</span>
             </a>
         </li>
         <li class="active">
             <a href="/reservas">
-                <i class='bx bxs-shopping-bag-alt' ></i>
+                <i class='bx bxs-shopping-bag-alt'></i>
                 <span class="text">Reservas</span>
             </a>
         </li>
         <li>
             <a href="/veiculos">
-                <i class='bx bxs-car-garage' ></i>
+                <i class='bx bxs-car-garage'></i>
                 <span class="text">Veículos</span>
             </a>
         </li>
         <li>
             <a href="/categorias">
-                <i class='bx bxs-category' ></i>
+                <i class='bx bxs-category'></i>
                 <span class="text">Categorias</span>
             </a>
         </li>
         <li>
             <a href="/equipe">
-                <i class='bx bxs-group' ></i>
+                <i class='bx bxs-group'></i>
                 <span class="text">Equipe</span>
             </a>
         </li>
@@ -49,7 +49,7 @@
     <ul class="side-menu">
         <li>
             <a href="/home" class="logout">
-                <i class='bx bxs-log-out-circle' ></i>
+                <i class='bx bxs-log-out-circle'></i>
                 <span class="text">Sair</span>
             </a>
         </li>
@@ -58,41 +58,46 @@
 <section id="content">
     <main>
         <div class="head-title">
-            <h1>Categorias</h1>
+            <h1>Reservas</h1> <!-- Corrigido para "Reservas" -->
             <div class="filter">
                 <div class="filter-title">
                     <h3>Buscar</h3>
                     <label>
-                        <input type="text" placeholder="Nome da categoria">
+                        <input type="text" placeholder="Nome do usuário">
                         <button class="cleanBtn">Limpar</button>
                     </label>
                 </div>
                 <div class="newItem">
-                    <button class="filterBtn">Nova categoria</button>
+                    <button id="newItem" class="filterBtn">Nova Reserva</button>
                 </div>
             </div>
-        </div>
 
-        <div class="table-data">
-            <div class="order">
-                <div class="head">
-                    <h3>Recent Orders</h3>
+            <div class="table-data">
+                <div class="order">
+                    <div class="head">
+                        <h3>Reservas</h3>
+                    </div>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Usuário</th>
+                            <th>Veículo</th>
+                            <th>Data da Reserva</th>
+                            <th>Data da Devolução</th>
+                            <th>Status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
                 </div>
-                <table>
-                    <thead>
-                    <tr>
-                        <th>User</th>
-                        <th>Date Order</th>
-                        <th>Status</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-
-                    </tbody>
-                </table>
             </div>
         </div>
     </main>
 </section>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{ asset('assets/js/reservas.js') }}"></script>
 </body>
 </html>

@@ -21,9 +21,9 @@ class Reserva extends Model
     ];
 
     // Relacionamento com o cliente (uma reserva pertence a um cliente)
-    public function cliente()
+    public function usuario()
     {
-        return $this->belongsTo(Cliente::class, 'id_cliente');
+        return $this->belongsTo(Usuario::class, 'id_cliente');
     }
 
     // Relacionamento com o veículo (uma reserva pertence a um veículo)
