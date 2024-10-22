@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Veiculo;
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreUpdateVeiculoRequest;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class VeiculoController extends Controller
 {
@@ -25,43 +27,56 @@ class VeiculoController extends Controller
     }
 
     // Cria um novo veículo
-    public function store(Request $request)
+    public function store(StoreUpdateVeiculoRequest $request)
     {
-        // Valida os dados do veículo
-        $request->validate([
-            'id_categoria' => 'required|exists:categorias,id',
-            'marca' => 'required|string|max:255',
-            'modelo' => 'required|string|max:255',
-            'ano_fabricacao' => 'required|integer|min:1886', // Desde a invenção do carro
-            'placa' => 'required|string|max:10|unique:veiculos,placa',
-            'status' => 'required|in:disponível,alugado,em manutenção',
-        ]);
-
-        // Cria e salva o veículo no banco
         $veiculo = Veiculo::create($request->all());
+
+        // Salva o veículo para obter o ID
+        $veiculo->save();
+
+        // Processa o upload da imagem, se houver
+        if ($request->hasFile('img') && $request->file('img')->isValid()) {
+            $img = $request->file('img');
+            $imgName = Str::slug($request->modelo) . '.' . $img->getClientOriginalExtension();
+
+            // Define o caminho correto de armazenamento
+            $imgPath = $img->storeAs("veiculos/{$veiculo->id}", $imgName, 'public');
+
+            // Atualiza o caminho da imagem no veículo
+            $veiculo->img = "storage/veiculos/{$veiculo->id}/{$imgName}";
+            $veiculo->save();
+        }
+
+        // Retorna a resposta JSON
         return response()->json($veiculo, 201);
     }
 
     // Atualiza um veículo existente
-    public function update(Request $request, $id)
+    public function update(StoreUpdateVeiculoRequest $request, $id)
     {
         $veiculo = Veiculo::find($id);
         if (!$veiculo) {
             return response()->json(['message' => 'Veículo não encontrado'], 404);
         }
 
-        // Valida os dados de atualização
-        $request->validate([
-            'id_categoria' => 'exists:categorias,id',
-            'marca' => 'string|max:255',
-            'modelo' => 'string|max:255',
-            'ano_fabricacao' => 'integer|min:1886',
-            'placa' => 'string|max:10|unique:veiculos,placa,' . $id,
-            'status' => 'in:disponível,alugado,em manutenção',
-        ]);
+        // Processa o upload da nova imagem, se houver
+        if ($request->hasFile('img') && $request->file('img')->isValid()) {
+            // Apaga a imagem antiga, se existir
+            if ($veiculo->img && file_exists(public_path("storage/{$veiculo->img}"))) {
+                unlink(public_path("storage/{$veiculo->img}"));
+            }
+
+            $img = $request->file('img');
+            $imgName = Str::slug($request->modelo) . '.' . $img->getClientOriginalExtension();
+            $imgPath = $img->storeAs('veiculos', $imgName, 'public');
+
+            // Armazena apenas o diretório
+            $request->merge(['img' => 'veiculos/' . $imgName]);
+        }
 
         // Atualiza os dados do veículo
         $veiculo->update($request->all());
+
         return response()->json($veiculo, 200);
     }
 
@@ -73,7 +88,13 @@ class VeiculoController extends Controller
             return response()->json(['message' => 'Veículo não encontrado'], 404);
         }
 
+        // Remove a imagem associada, se existir
+        if ($veiculo->img && file_exists(public_path("storage/{$veiculo->img}"))) {
+            unlink(public_path("storage/{$veiculo->img}"));
+        }
+
         $veiculo->delete();
+
         return response()->json(['message' => 'Veículo deletado com sucesso'], 200);
     }
 }

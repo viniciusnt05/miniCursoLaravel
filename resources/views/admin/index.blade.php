@@ -66,26 +66,25 @@
                 <li>
                     <i class='bx bxs-calendar-check' ></i>
                     <span class="text">
-                            <h3>1020</h3>
-                            <p>New Order</p>
-                        </span>
+                        <h3 id="total-reservas">0</h3>
+                        <p>Reservas</p>
+                    </span>
                 </li>
                 <li>
-                    <i class='bx bxs-group' ></i>
+                    <i class='bx bxs-group'></i>
                     <span class="text">
-                            <h3>2834</h3>
-                            <p>Visitors</p>
-                        </span>
+                        <h3 id="total-visitors">0</h3>
+                        <p>Clientes</p>
+                    </span>
                 </li>
                 <li>
                     <i class='bx bxs-dollar-circle' ></i>
                     <span class="text">
-                            <h3>$2543</h3>
-                            <p>Total Sales</p>
-                        </span>
+                        <h3 id="total-sales">$0</h3>
+                        <p>Total Sales</p>
+                    </span>
                 </li>
             </ul>
-
 
             <div class="table-data">
                 <div class="order">
@@ -119,4 +118,7 @@
         </main>
     </section>
 </body>
+
+<script src="{{ asset('assets/js/dashboard.js') }}"></script>
+
 </html>

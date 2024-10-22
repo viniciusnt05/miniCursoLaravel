@@ -17,8 +17,10 @@ return new class extends Migration
             $table->string('marca');
             $table->string('modelo');
             $table->integer('ano_fabricacao');
+            $table->float('valor');
+            $table->longText('img')->nullable();
             $table->string('placa')->unique();
-            $table->enum('status', ['disponível', 'alugado', 'em manutenção'])->default('disponível');
+            $table->enum('status', ['disponivel', 'alugado', 'manutencao'])->default('disponivel');
 
             $table->foreign('id_categoria')->references('id')->on('categorias');
 

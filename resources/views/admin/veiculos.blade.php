@@ -10,6 +10,9 @@
 </head>
 <body>
 <section id="sidebar">
+
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <a href="#" class="brand">
         <img src="{{ asset('assets/images/logo_brand.svg') }}" alt="Logo">
     </a>
@@ -83,12 +86,17 @@
                         <th>Modelo</th>
                         <th>Ano</th>
                         <th>Placa</th>
+                        <th>Valor</th>
+                        <th>Img</th>
                         <th>Status</th>
                     </tr>
                     </thead>
+                    <tbody>
+                    </tbody>
                 </table>
             </div>
         </div>
+
     </main>
 </section>
 
