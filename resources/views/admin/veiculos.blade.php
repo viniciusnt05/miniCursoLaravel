@@ -66,8 +66,8 @@
                 <div class="filter-title">
                     <h3>Buscar</h3>
                     <label>
-                        <input type="text" placeholder="Nome do veículo">
-                        <button class="cleanBtn">Limpar</button>
+                        <input type="text" id="searchInput" placeholder="Nome do veículo">
+                        <button class="cleanBtn" id="clearBtn">Limpar</button>
                     </label>
                 </div>
                 <div class="newItem">
@@ -91,7 +91,8 @@
                         <th>Status</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="veiculos-list">
+                    <!-- As linhas da tabela serão geradas dinamicamente -->
                     </tbody>
                 </table>
             </div>

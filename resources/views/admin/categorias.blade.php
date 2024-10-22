@@ -10,6 +10,9 @@
 </head>
 <body>
 <section id="sidebar">
+
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <a href="#" class="brand">
         <img src="{{ asset('assets/images/logo_brand.svg') }}" alt="Logo">
     </a>
@@ -83,6 +86,9 @@
                         <th colspan="2">Ações</th>
                     </tr>
                     </thead>
+                    <tbody id="categoriaTableBody">
+                    <!-- Categorias serão carregadas aqui -->
+                    </tbody>
                 </table>
             </div>
         </div>

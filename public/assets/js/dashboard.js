@@ -1,6 +1,12 @@
 document.addEventListener('DOMContentLoaded', async () => {
+    await carregarReservas();
+    await carregarUsuarios();
+    await carregarTotalSales();
+});
+
+// Função para carregar o total de reservas
+async function carregarReservas() {
     try {
-        // Faz a requisição para buscar o total de reservas
         const response = await fetch('/api/reservas', {
             method: 'GET',
             headers: {
@@ -13,77 +19,68 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         const data = await response.json();
-        console.log(data.numero_total);
-        // Verifica se 'numero_total' está presente na resposta
+
+        // Atualiza o valor no banner de reservas
         if (data && data.numero_total !== undefined) {
-            // Atualiza o valor no banner "New Order"
             document.getElementById('total-reservas').textContent = data.numero_total;
-        } else {
-            console.error('A resposta não contém "numero_total".');
-        }
-
-        // Outros valores de exemplo para os banners
-        document.getElementById('total-visitors').textContent = 2834; // Atualize conforme a lógica
-        document.getElementById('total-sales').textContent = '$2543'; // Atualize conforme a lógica
-    } catch (error) {
-        console.error('Erro ao carregar o dashboard:', error);
-    }
-});
-
-document.addEventListener('DOMContentLoaded', async () => {
-    try {
-        // Faz a requisição para buscar o total de reservas
-        console.log('Iniciando a requisição para /api/reservas');
-        const responseReservas = await fetch('/api/reservas', {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-            },
-        });
-
-        if (!responseReservas.ok) {
-            throw new Error('Erro ao buscar reservas');
-        }
-
-        const dataReservas = await responseReservas.json();
-        console.log('Dados de reservas recebidos:', dataReservas);
-
-        // Verifica se 'numero_total' está presente na resposta de reservas
-        if (dataReservas && dataReservas.numero_total !== undefined) {
-            console.log('Número total de reservas:', dataReservas.numero_total);
-            document.getElementById('total-reservas').textContent = dataReservas.numero_total;
         } else {
             console.error('A resposta de reservas não contém "numero_total".');
         }
+    } catch (error) {
+        console.error('Erro ao carregar o total de reservas:', error);
+    }
+}
 
-        // Faz a requisição para buscar o total de usuários
-        console.log('Iniciando a requisição para /api/usuarios');
-        const responseUsuarios = await fetch('/api/usuarios', {
+// Função para carregar o total de usuários
+async function carregarUsuarios() {
+    try {
+        const response = await fetch('/api/usuarios', {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
             },
         });
 
-        if (!responseUsuarios.ok) {
+        if (!response.ok) {
             throw new Error('Erro ao buscar usuários');
         }
 
-        const dataUsuarios = await responseUsuarios.json();
-        console.log('Dados de usuários recebidos:', dataUsuarios);
+        const data = await response.json();
 
-        // Verifica se 'numero_total' está presente na resposta de usuários
-        if (dataUsuarios && dataUsuarios.numero_total !== undefined) {
-            console.log('Número total de usuários:', dataUsuarios.numero_total);
-            document.getElementById('total-visitors').textContent = dataUsuarios.numero_total;
+        // Atualiza o valor no banner de usuários
+        if (data && data.numero_total !== undefined) {
+            document.getElementById('total-visitors').textContent = data.numero_total;
         } else {
             console.error('A resposta de usuários não contém "numero_total".');
         }
-
-        // Valor de exemplo para o banner "Total Sales"
-        document.getElementById('total-sales').textContent = '$2543'; // Atualize conforme a lógica
     } catch (error) {
-        console.error('Erro ao carregar o dashboard:', error);
+        console.error('Erro ao carregar o total de usuários:', error);
     }
-});
+}
 
+// Função para carregar o valor total das reservas concluídas
+async function carregarTotalSales() {
+    try {
+        const response = await fetch('/api/reservas', {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error('Erro ao buscar total de vendas');
+        }
+
+        const data = await response.json();
+
+        // Atualiza o valor no banner de vendas concluídas
+        if (data && data.valor_total_concluidas !== undefined) {
+            document.getElementById('total-sales').textContent = `R$ ${parseFloat(data.valor_total_concluidas).toFixed(2)}`;
+        } else {
+            console.error('A resposta de vendas não contém "valor_total_concluidas".');
+        }
+    } catch (error) {
+        console.error('Erro ao carregar o total de vendas:', error);
+    }
+}

@@ -28,6 +28,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanc
         Route::post('/', [VeiculoController::class, 'store']);
         Route::patch('/{id}', [VeiculoController::class, 'update']);
         Route::delete('/{id}', [VeiculoController::class, 'destroy']);
+        Route::get('/search/{nome}', [VeiculoController::class, 'search']);
     });
 
     Route::prefix('/reservas')->group(function () {

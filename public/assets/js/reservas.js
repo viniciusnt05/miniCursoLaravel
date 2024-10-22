@@ -2,37 +2,29 @@ document.getElementById('newItem').addEventListener('click', async () => {
     try {
         // Carrega os veículos disponíveis para a reserva
         const responseVeiculos = await fetch('/api/veiculos', { method: 'GET' });
-
         if (!responseVeiculos.ok) {
             throw new Error(`Erro ao carregar veículos: ${responseVeiculos.statusText}`);
         }
-
         const veiculosData = await responseVeiculos.json();
-
         const veiculos = Array.isArray(veiculosData) ? veiculosData : veiculosData.veiculos;
         if (!veiculos || !veiculos.length) {
             throw new Error('Nenhum veículo encontrado');
         }
 
         const responseUsuarios = await fetch('/api/reservas/usuariosDisponiveis', { method: 'GET' });
-
         if (!responseUsuarios.ok) {
             throw new Error(`Erro ao carregar usuários: ${responseUsuarios.statusText}`);
         }
-
         const usuariosData = await responseUsuarios.json();
-
         const usuarios = Array.isArray(usuariosData) ? usuariosData : usuariosData.usuarios;
         if (!usuarios || !usuarios.length) {
             throw new Error('Nenhum usuário encontrado');
         }
 
-        // Monta as opções dos veículos
+        // Monta as opções dos veículos e usuários
         const optionsVeiculos = veiculos.map(
             (veiculo) => `<option value="${veiculo.id}" data-valor="${veiculo.valor}">${veiculo.modelo} - ${veiculo.placa}</option>`
         ).join('');
-
-        // Monta as opções dos usuários
         const optionsUsuarios = usuarios.map(
             (usuario) => `<option value="${usuario.id}">${usuario.nome}</option>`
         ).join('');
@@ -113,12 +105,14 @@ document.getElementById('newItem').addEventListener('click', async () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 const data = result.value;
+                const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
                 // Envia a requisição para criar a reserva
                 fetch('/api/reservas', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': token,
                     },
                     body: JSON.stringify(data),
                 })
@@ -143,7 +137,6 @@ document.getElementById('newItem').addEventListener('click', async () => {
         Swal.fire('Erro', 'Não foi possível abrir o modal de reserva.', 'error');
     }
 });
-
 
 // Função para carregar as reservas da API e preencher a tabela
 async function carregarReservas() {
@@ -197,7 +190,6 @@ async function carregarReservas() {
         console.error('Erro:', error);
     }
 }
-
 
 // Chama a função para carregar as reservas ao carregar a página
 document.addEventListener('DOMContentLoaded', () => {

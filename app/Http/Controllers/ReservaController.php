@@ -14,7 +14,14 @@ class ReservaController extends Controller
     // Lista todas as reservas
     public function index()
     {
+        // Filtra as reservas e busca as relações de usuário e veículo
         $reservas = Reserva::with('usuario', 'veiculo')->get();
+
+        // Filtra apenas as reservas concluídas
+        $reservasConcluidas = $reservas->where('status', 'concluida');
+
+        // Calcula o valor total das reservas concluídas
+        $valorTotalConcluidas = $reservasConcluidas->sum('valor_total');
 
         // Adiciona o número total de reservas
         $numero_total = $reservas->count();
@@ -22,6 +29,7 @@ class ReservaController extends Controller
         return response()->json([
             'reservas' => $reservas,
             'numero_total' => $numero_total,
+            'valor_total_concluidas' => $valorTotalConcluidas,
         ]);
     }
 

@@ -10,6 +10,9 @@
 </head>
 <body>
 <section id="sidebar">
+
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <a href="#" class="brand">
         <img src="{{ asset('assets/images/logo_brand.svg') }}" alt="Logo">
     </a>
@@ -68,7 +71,7 @@
                     </label>
                 </div>
                 <div class="newItem">
-                    <button class="filterBtn">Nova categoria</button>
+                    <button class="filterBtn">Novo Admin</button>
                 </div>
             </div>
         </div>
@@ -81,9 +84,10 @@
                 <table>
                     <thead>
                     <tr>
-                        <th>User</th>
-                        <th>Date Order</th>
-                        <th>Status</th>
+                        <th>Nome</th>
+                        <th>CPF</th>
+                        <th>Data de Nascimento</th>
+                        <th>Email</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -95,4 +99,8 @@
     </main>
 </section>
 </body>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{ asset('assets/js/admins.js') }}"></script>
+
 </html>

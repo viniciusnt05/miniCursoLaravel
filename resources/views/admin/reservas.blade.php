@@ -10,6 +10,9 @@
 </head>
 <body>
 <section id="sidebar">
+
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <a href="#" class="brand">
         <img src="{{ asset('assets/images/logo_brand.svg') }}" alt="Logo">
     </a>

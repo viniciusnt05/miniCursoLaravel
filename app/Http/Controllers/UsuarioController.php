@@ -49,7 +49,7 @@ class UsuarioController extends Controller
             $usuario->save();
 
             // Redireciona para a página de login com uma mensagem de sucesso
-            return redirect()->to('/login/entrar')->with('success', 'Cadastro realizado com sucesso!');
+            return response()->json(['message' => 'Usuário cadastrado com sucesso!'], 201);
         } catch (\Exception $e) {
             // Retorna uma resposta JSON com o erro caso ocorra uma exceção
             return response()->json(['error' => 'Erro ao cadastrar o usuário: ' . $e->getMessage()], 500);

@@ -97,4 +97,14 @@ class VeiculoController extends Controller
 
         return response()->json(['message' => 'Veículo deletado com sucesso'], 200);
     }
+
+    public function search($query)
+    {
+        $veiculos = Veiculo::with('categoria')
+            ->where('modelo', 'LIKE', "%{$query}%")
+            ->orWhere('marca', 'LIKE', "%{$query}%")
+            ->get();
+
+        return response()->json($veiculos);
+    }
 }

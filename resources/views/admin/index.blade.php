@@ -81,40 +81,10 @@
                     <i class='bx bxs-dollar-circle' ></i>
                     <span class="text">
                         <h3 id="total-sales">$0</h3>
-                        <p>Total Sales</p>
+                        <p>Receita Concluída</p>
                     </span>
                 </li>
             </ul>
-
-            <div class="table-data">
-                <div class="order">
-                    <div class="head">
-                        <h3>Recent Orders</h3>
-                    </div>
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>User</th>
-                            <th>Date Order</th>
-                            <th>Status</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-
-                        </tbody>
-                    </table>
-                </div>
-                <div class="todo">
-                    <div class="head">
-                        <h3>Todos</h3>
-                        <i class='bx bx-plus' ></i>
-                        <i class='bx bx-filter' ></i>
-                    </div>
-                    <ul class="todo-list">
-
-                    </ul>
-                </div>
-            </div>
         </main>
     </section>
 </body>

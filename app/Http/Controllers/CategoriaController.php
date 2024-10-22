@@ -23,11 +23,6 @@ class CategoriaController extends Controller
         return Categoria::find($id);
     }
 
-    public function search($nome)
-    {
-        return Categoria::where('nome', 'LIKE', $nome)->get();
-    }
-
     public function update(Request $request, $id)
     {
         $categoria = Categoria::findOrFail($id);
@@ -40,5 +35,20 @@ class CategoriaController extends Controller
         Categoria::destroy($id);
         return response()->json(null, 204);
     }
+
+    public function search($nome)
+    {
+        // Verifica se o nome foi passado e não está vazio
+        if (empty($nome)) {
+            return response()->json([], 200);
+        }
+
+        // Ajuste da consulta para considerar termos parciais
+        $categorias = Categoria::where('nome', 'LIKE', '%' . $nome . '%')->get();
+
+        // Retorna as categorias encontradas ou um array vazio
+        return response()->json($categorias, 200);
+    }
+
 }
 

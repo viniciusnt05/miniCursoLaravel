@@ -19,19 +19,36 @@ document.getElementById('newItem').addEventListener('click', async () => {
             const nome = document.getElementById('nome').value;
             const descricao = document.getElementById('descricao').value.trim();
 
+            if (!nome) {
+                Swal.showValidationMessage('O campo Nome é obrigatório');
+                return false;
+            }
+
             return { nome, descricao };
         }
-    }).then((result) => {
+    }).then(async (result) => {
         if (result.isConfirmed) {
             const data = result.value;
-            fetch('/api/categorias', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-            })
-            .then(response => response.json())
+
+            try {
+                const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                const response = await fetch('/api/categorias', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': token,
+                    },
+                    body: JSON.stringify(data),
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.text(); // Captura o texto da resposta para fins de depuração
+                    console.error('Resposta de erro do servidor:', errorData);
+                    throw new Error('Erro ao criar a categoria');
+                }
+
+                const responseData = await response.json();
+
                 Swal.fire({
                     title: 'Sucesso',
                     text: 'Categoria criada com sucesso!',
@@ -42,11 +59,11 @@ document.getElementById('newItem').addEventListener('click', async () => {
                     }
                 }).then(() => {
                     window.location.reload();
-                })
-            .catch((error) => {
-                Swal.fire('Erro', 'Ocorreu um erro ao criar a categoria.', 'error');
+                });
+            } catch (error) {
                 console.error('Erro:', error);
-            });
+                Swal.fire('Erro', error.message || 'Ocorreu um erro ao criar a categoria.', 'error');
+            }
         }
     });
 });
@@ -55,17 +72,29 @@ document.getElementById('searchInput').addEventListener('input', async (event) =
     const query = event.target.value.trim();
 
     if (query.length === 0) {
-        fetchCategorias();
+        fetchCategorias(); // Recarrega todas as categorias se o input estiver vazio
         return;
     }
 
     try {
-        const response = await fetch(`/api/categorias/search/${encodeURIComponent(query)}`); // Use o endpoint apropriado
+        // Faz uma requisição para o endpoint de busca
+        const response = await fetch(`/api/categorias/search/${encodeURIComponent(query)}`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error('Erro ao buscar categorias');
+        }
 
         const categorias = await response.json();
+
+        // Renderiza as categorias encontradas
         renderCategorias(categorias);
     } catch (error) {
-        console.error('Erro:', error);
+        console.error('Erro ao buscar categorias:', error);
         Swal.fire('Erro', 'Ocorreu um erro ao buscar as categorias.', 'error');
     }
 });
@@ -138,75 +167,68 @@ async function fetchCategorias() {
     }
 }
 
-async function editCategoria(id) {
-    let categoria = await fetch(`/api/categorias/${id}`, {
-        method: 'GET',
-    }).then(response => response.json())
-        .catch(error => {
-            Swal.fire('Erro', 'Não foi possível encontrar a categoria.', 'error');
-            console.error('Erro:', error);
+async function editCategoria(categoria) {
+    try {
+        // Abre o modal de edição com os dados da categoria recebidos
+        const result = await Swal.fire({
+            title: 'Editar Categoria',
+            html: `
+                <input type="text" id="nome" class="swal2-input" placeholder="Nome" value="${categoria.nome}" required>
+                <input type="text" id="descricao" class="swal2-input" placeholder="Descrição" value="${categoria.descricao || ''}">
+            `,
+            confirmButtonText: 'Salvar',
+            showCancelButton: true,
+            cancelButtonText: 'Cancelar',
+            focusConfirm: false,
+            customClass: {
+                confirmButton: 'btn-success',
+                cancelButton: 'btn-cancel',
+            },
+            preConfirm: () => {
+                const nome = document.getElementById('nome').value.trim();
+                const descricao = document.getElementById('descricao').value.trim();
+
+                if (!nome) {
+                    Swal.showValidationMessage('Por favor, insira um nome');
+                    return false;
+                }
+
+                return { nome, descricao };
+            },
         });
 
-    Swal.fire({
-        title: 'Editar Categoria',
-        html: `
-            <input type="text" id="nome" class="swal2-input" placeholder="Nome" value="${categoria.nome}" required>
-            <input type="text" id="descricao" class="swal2-input" placeholder="Descrição" value="${categoria.descricao}">
-        `,
-        confirmButtonText: 'Salvar',
-        showCancelButton: true,
-        cancelButtonText: 'Cancelar',
-        focusConfirm: false,
-        customClass: {
-            confirmButton: 'btn-success',
-            cancelButton: 'btn-cancel'
-        },
-        preConfirm: () => {
-            const nome = document.getElementById('nome').value;
-            const descricao = document.getElementById('descricao').value.trim();
-
-            if (!nome) {
-                Swal.showValidationMessage('Por favor, insira um nome');
-                return false;
-            }
-
-            return { nome, descricao };
-        }
-    }).then((result) => {
         if (result.isConfirmed) {
             const data = result.value;
-            fetch(`/api/categorias/${categoria.id}`, {
+
+            // Faz a requisição para atualizar a categoria
+            const updateResponse = await fetch(`/api/categorias/${categoria.id}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(data),
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Erro ao atualizar a categoria');
-                    }
-                    return response.json();
-                })
-                .then(() => {
-                    Swal.fire({
-                        title: 'Sucesso',
-                        text: 'Categoria editada com sucesso!',
-                        icon: 'success',
-                        confirmButtonText: 'OK',
-                        customClass: {
-                            confirmButton: 'btn-success'
-                        }
-                    }).then(() => {
-                        window.location.reload();
-                    });
-                })
-                .catch((error) => {
-                    Swal.fire('Erro', 'Ocorreu um erro ao editar a categoria.', 'error');
-                    console.error('Erro:', error);
-                });
+            });
+
+            if (!updateResponse.ok) {
+                throw new Error('Erro ao atualizar a categoria');
+            }
+
+            Swal.fire({
+                title: 'Sucesso',
+                text: 'Categoria editada com sucesso!',
+                icon: 'success',
+                confirmButtonText: 'OK',
+                customClass: {
+                    confirmButton: 'btn-success',
+                },
+            }).then(() => {
+                window.location.reload();
+            });
         }
-    });
+    } catch (error) {
+        Swal.fire('Erro', 'Ocorreu um erro ao editar a categoria.', 'error');
+        console.error('Erro:', error);
+    }
 }
 
 async function deleteCategoria(id) {
