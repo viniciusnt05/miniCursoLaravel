@@ -29,7 +29,7 @@ document.getElementById('newItem').addEventListener('click', async () => {
 
         // Monta as opções dos veículos
         const optionsVeiculos = veiculos.map(
-            (veiculo) => `<option value="${veiculo.id}">${veiculo.modelo} - ${veiculo.placa}</option>`
+            (veiculo) => `<option value="${veiculo.id}" data-valor="${veiculo.valor}">${veiculo.modelo} - ${veiculo.placa}</option>`
         ).join('');
 
         // Monta as opções dos usuários
@@ -49,16 +49,18 @@ document.getElementById('newItem').addEventListener('click', async () => {
                     <option value="">Selecione um cliente</option>
                     ${optionsUsuarios}
                 </select>
-                <br><br>
-                <label>Data de Retirada</label>
                 <br>
+                <label>Data de Retirada</label>
                 <input type="date" id="data_retirada" class="swal2-input">
-                <br> <br>
-                <label>Data de Devolução Prevista</label>
+                <br>
+                <label>Data de Devolução</label>
                 <input type="date" id="data_devolucao_prevista" class="swal2-input">
                 <br>
+                <label>Diárias</label>
+                <input type="number" id="qtd_dias" class="swal2-input" min="1">
+                <br>
                 <label>Valor Total</label>
-                <input type="number" id="valor_total" class="swal2-input" placeholder="Valor Total">
+                <input type="number" id="valor_total" class="swal2-input" placeholder="Valor Total" readonly>
                 <select id="status" class="swal2-input">
                     <option value="" disabled selected>Status da Reserva</option>
                     <option value="confirmada">Confirmada</option>
@@ -74,20 +76,39 @@ document.getElementById('newItem').addEventListener('click', async () => {
                 confirmButton: 'btn-success',
                 cancelButton: 'btn-cancel'
             },
+            didOpen: () => {
+                const veiculoSelect = document.getElementById('id_veiculo');
+                const qtdDiasInput = document.getElementById('qtd_dias');
+                const valorTotalInput = document.getElementById('valor_total');
+
+                // Atualiza o valor total com base no veículo e na quantidade de dias
+                const atualizarValorTotal = () => {
+                    const veiculoSelecionado = veiculoSelect.options[veiculoSelect.selectedIndex];
+                    const valorDiario = veiculoSelecionado ? parseFloat(veiculoSelecionado.getAttribute('data-valor')) : 0;
+                    const qtdDias = parseInt(qtdDiasInput.value) || 0;
+                    const valorTotal = valorDiario * qtdDias;
+                    valorTotalInput.value = valorTotal.toFixed(2);
+                };
+
+                // Adiciona eventos de mudança
+                veiculoSelect.addEventListener('change', atualizarValorTotal);
+                qtdDiasInput.addEventListener('input', atualizarValorTotal);
+            },
             preConfirm: () => {
                 const id_veiculo = document.getElementById('id_veiculo').value;
                 const id_cliente = document.getElementById('id_cliente').value;
                 const data_retirada = document.getElementById('data_retirada').value;
                 const data_devolucao_prevista = document.getElementById('data_devolucao_prevista').value;
+                const qtd_dias = document.getElementById('qtd_dias').value;
                 const valor_total = document.getElementById('valor_total').value;
                 const status = document.getElementById('status').value;
 
-                if (!id_veiculo || !id_cliente || !data_retirada || !data_devolucao_prevista || !valor_total || !status) {
+                if (!id_veiculo || !id_cliente || !data_retirada || !data_devolucao_prevista || !qtd_dias || !valor_total || !status) {
                     Swal.showValidationMessage('Preencha todos os campos obrigatórios');
                     return false;
                 }
 
-                return { id_veiculo, id_cliente, data_retirada, data_devolucao_prevista, valor_total, status };
+                return { id_veiculo, id_cliente, data_retirada, data_devolucao_prevista, qtd_dias, valor_total, status };
             }
         }).then((result) => {
             if (result.isConfirmed) {
@@ -122,6 +143,7 @@ document.getElementById('newItem').addEventListener('click', async () => {
         Swal.fire('Erro', 'Não foi possível abrir o modal de reserva.', 'error');
     }
 });
+
 
 // Função para carregar as reservas da API e preencher a tabela
 async function carregarReservas() {

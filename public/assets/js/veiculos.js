@@ -73,21 +73,19 @@ document.getElementById('newItem').addEventListener('click', async () => {
             formData.append('ano_fabricacao', data.ano_fabricacao);
             formData.append('valor', data.valor);
             formData.append('placa', data.placa);
-            formData.append('img', data.img);
+            formData.append('img', data.img); // Adiciona o arquivo de imagem
             formData.append('status', data.status);
 
             console.log('Dados a serem enviados:', formData);
-
 
             const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
             fetch('/api/veiculos', {
                 method: 'POST',
                 headers: {
-                    'X-CSRF-TOKEN': token,
-                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': token
                 },
-                body: JSON.stringify(data),
+                body: formData, // Envia o FormData
             })
                 .then(async response => {
                     console.log('Resposta bruta:', response);

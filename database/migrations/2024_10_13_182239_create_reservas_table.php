@@ -17,8 +17,9 @@ return new class extends Migration
             $table->unsignedBigInteger('id_veiculo');
             $table->date('data_retirada');
             $table->date('data_devolucao_prevista');
-            $table->enum('status', ['confirmada', 'cancelada', 'concluida'])->default('confirmada');
             $table->decimal('valor_total', 10, 2);
+            $table->integer('qtd_dias');
+            $table->enum('status', ['confirmada', 'cancelada', 'concluida'])->default('confirmada');
 
             $table->foreign('id_cliente')->references('id')->on('usuarios');
             $table->foreign('id_veiculo')->references('id')->on('veiculos');

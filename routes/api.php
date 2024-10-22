@@ -33,6 +33,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanc
     Route::prefix('/reservas')->group(function () {
         Route::get('/', [ReservaController::class, 'index']);
         Route::get('/usuariosDisponiveis', [ReservaController::class, 'getUsuariosDisponiveis']);
+        Route::post('/calcularPreco', [ReservaController::class, 'calcularPrecoTotal']);
         Route::get('/{id}', [ReservaController::class, 'show']);
         Route::post('/', [ReservaController::class, 'store']);
         Route::patch('/{id}', [ReservaController::class, 'update']);

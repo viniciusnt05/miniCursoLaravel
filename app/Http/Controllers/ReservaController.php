@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Reserva;
 use App\Http\Requests\StoreUpdateReservaRequest;
 use App\Models\Usuario;
+use App\Models\Veiculo;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class ReservaController extends Controller
 {
@@ -77,6 +80,33 @@ class ReservaController extends Controller
         $usuariosDisponiveis = Usuario::whereNotIn('id', $usuariosReservados)->get();
 
         return response()->json($usuariosDisponiveis);
+    }
+
+    public function calcularPrecoTotal(Request $request)
+    {
+        // Validações básicas
+        $request->validate([
+            'id_veiculo' => 'required|exists:veiculos,id',
+            'data_retirada' => 'required|date',
+            'data_devolucao_prevista' => 'required|date|after_or_equal:data_retirada',
+        ]);
+
+        // Obtém os dados do veículo
+        $veiculo = Veiculo::findOrFail($request->id_veiculo);
+
+        // Calcula a quantidade de dias entre retirada e devolução
+        $dataRetirada = Carbon::parse($request->data_retirada);
+        $dataDevolucaoPrevista = Carbon::parse($request->data_devolucao_prevista);
+        $qtdDias = $dataDevolucaoPrevista->diffInDays($dataRetirada) + 1; // Inclui o dia de retirada
+
+        // Calcula o preço total
+        $precoTotal = $qtdDias * $veiculo->valor;
+
+        // Retorna o preço total em um JSON
+        return response()->json([
+            'preco_total' => $precoTotal,
+            'qtd_dias' => $qtdDias,
+        ], 200);
     }
 
 }
