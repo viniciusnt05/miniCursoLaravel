@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Reserva;
 use App\Http\Requests\StoreUpdateReservaRequest;
+use App\Models\Usuario;
 
 class ReservaController extends Controller
 {
@@ -21,7 +22,6 @@ class ReservaController extends Controller
         ]);
     }
 
-
     // Mostra uma reserva específica por ID
     public function show($id)
     {
@@ -35,14 +35,7 @@ class ReservaController extends Controller
     // Cria uma nova reserva
     public function store(StoreUpdateReservaRequest $request)
     {
-        // Cria uma nova reserva e atribui os campos
-        $reserva = new Reserva;
-        $reserva->id_cliente = $request->id_cliente;
-        $reserva->id_veiculo = $request->id_veiculo;
-        $reserva->data_retirada = $request->data_retirada;
-        $reserva->data_devolucao_prevista = $request->data_devolucao_prevista;
-        $reserva->status = $request->status;
-        $reserva->valor_total = $request->valor_total;
+        $reserva = Reserva::create($request->all());
 
         $reserva->save();
 
@@ -74,4 +67,16 @@ class ReservaController extends Controller
         $reserva->delete();
         return response()->json(['message' => 'Reserva deletada com sucesso'], 200);
     }
+
+    public function getUsuariosDisponiveis()
+    {
+        // Busca os IDs dos usuários que estão em reservas confirmadas
+        $usuariosReservados = Reserva::where('status', 'confirmada')->pluck('id_cliente');
+
+        // Busca os usuários que não estão em reservas confirmadas
+        $usuariosDisponiveis = Usuario::whereNotIn('id', $usuariosReservados)->get();
+
+        return response()->json($usuariosDisponiveis);
+    }
+
 }

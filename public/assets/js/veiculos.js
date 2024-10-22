@@ -27,7 +27,8 @@ document.getElementById('newItem').addEventListener('click', async () => {
             <input type="text" id="modelo" class="swal2-input" placeholder="Modelo">
             <input type="number" id="ano_fabricacao" class="swal2-input" placeholder="Ano de Fabricação">
             <input type="text" id="placa" class="swal2-input" placeholder="Placa">
-            <input type="file" id="img" class="swal2-input" accept="image/*">
+            <input type="number" id="valor" class="swal2-input" placeholder="R$ Valor">
+            <input type="file" id="img" class="swal2-input" accept="image/*" style="width: 50%">
             <select id="status" class="swal2-input">
                 <option value="" disabled selected>Status do veículo</option>
                 <option value="disponivel">Disponível</option>
@@ -48,16 +49,17 @@ document.getElementById('newItem').addEventListener('click', async () => {
             const marca = document.getElementById('marca').value.trim();
             const modelo = document.getElementById('modelo').value.trim();
             const ano_fabricacao = document.getElementById('ano_fabricacao').value;
+            const valor = document.getElementById('valor').value;
             const placa = document.getElementById('placa').value.trim();
             const img = document.getElementById('img').files[0];
             const status = document.getElementById('status').value;
 
-            if (!id_categoria || !marca || !modelo || !ano_fabricacao || !placa || !img || !status) {
+            if (!id_categoria || !marca || !modelo || !ano_fabricacao || !placa || !status || !valor) {
                 Swal.showValidationMessage('Preencha todos os campos');
                 return false;
             }
 
-            return { id_categoria, marca, modelo, ano_fabricacao, placa, img, status };
+            return { id_categoria, marca, modelo, ano_fabricacao, placa, img, status, valor };
         }
     }).then((result) => {
         if (result.isConfirmed) {
@@ -69,16 +71,23 @@ document.getElementById('newItem').addEventListener('click', async () => {
             formData.append('marca', data.marca);
             formData.append('modelo', data.modelo);
             formData.append('ano_fabricacao', data.ano_fabricacao);
+            formData.append('valor', data.valor);
             formData.append('placa', data.placa);
-            formData.append('img', data.img);  // Arquivo de imagem
+            formData.append('img', data.img);
             formData.append('status', data.status);
 
             console.log('Dados a serem enviados:', formData);
 
-            // Envia a requisição com FormData
+
+            const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
             fetch('/api/veiculos', {
                 method: 'POST',
-                body: formData,
+                headers: {
+                    'X-CSRF-TOKEN': token,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
             })
                 .then(async response => {
                     console.log('Resposta bruta:', response);
@@ -125,15 +134,19 @@ async function carregarVeiculos() {
         tabelaVeiculos.innerHTML = ''; // Limpa a tabela antes de adicionar os dados
 
         veiculos.forEach((veiculo) => {
+            // Constroi o caminho correto para a imagem
+            const imgPath = veiculo.img;
+            console.log('Caminho da imagem:', imgPath); // Adicione isso para verificar o caminho da imagem
+
             const row = `
                 <tr>
-                    <td>${veiculo.categoria.nome}</td>
+                    <td>${veiculo.categoria ? veiculo.categoria.nome : 'Sem categoria'}</td>
                     <td>${veiculo.marca}</td>
                     <td>${veiculo.modelo}</td>
                     <td>${veiculo.ano_fabricacao}</td>
                     <td>${veiculo.placa}</td>
                     <td>R$ ${parseFloat(veiculo.valor).toFixed(2)}</td>
-                    <td><img src="/storage/${veiculo.img}" alt="${veiculo.modelo}" style="width: 50px; height: 50px;"></td>
+                    <td><img src="${imgPath}" alt="${veiculo.modelo}" style="width: 50px; height: 50px;"></td>
                     <td>${veiculo.status}</td>
                 </tr>
             `;

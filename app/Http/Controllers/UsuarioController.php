@@ -18,7 +18,7 @@ class UsuarioController extends Controller
 
         // Retorna a lista de clientes em formato JSON
         return response()->json([
-            'reservas' => $clientes,
+            'usuarios' => $clientes,
             'numero_total' => $numero_total,
         ]);
     }
@@ -43,16 +43,7 @@ class UsuarioController extends Controller
     public function store(StoreUpdateUsuarioRequest $request)
     {
         try {
-            // Criação do novo usuário com dados validados
-            $usuario = new Usuario;
-            $usuario->nome = $request->nome; // Atribui o nome do usuário
-            $usuario->cpf = preg_replace('/\D/', '', $request->cpf); // Remove a máscara do CPF
-            $usuario->email = $request->email; // Atribui o email
-            $usuario->senha = Hash::make($request->senha); // Criptografa a senha
-            $usuario->data_nascimento = $request->data_nascimento; // Atribui a data de nascimento
-            $usuario->endereco = $request->endereco; // Atribui o endereço
-            $usuario->telefone = $request->telefone; // Atribui o telefone
-            $usuario->tipo_usuario = 'cliente'; // Define o tipo de usuário como 'cliente'
+            $usuario = Usuario::create($request->all());
 
             // Salvando usuário no banco de dados
             $usuario->save();
@@ -116,4 +107,5 @@ class UsuarioController extends Controller
         // Retorna uma mensagem de sucesso em formato JSON
         return response()->json(['message' => 'Cliente deletado com sucesso'], 200);
     }
+
 }

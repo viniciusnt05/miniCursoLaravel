@@ -1,23 +1,26 @@
 document.getElementById('newItem').addEventListener('click', async () => {
     try {
-        console.log('Iniciando requisição para veículos...');
-
         // Carrega os veículos disponíveis para a reserva
         const responseVeiculos = await fetch('/api/veiculos', { method: 'GET' });
+
+        if (!responseVeiculos.ok) {
+            throw new Error(`Erro ao carregar veículos: ${responseVeiculos.statusText}`);
+        }
+
         const veiculosData = await responseVeiculos.json();
-        console.log('Resposta de veículos:', veiculosData);
 
         const veiculos = Array.isArray(veiculosData) ? veiculosData : veiculosData.veiculos;
         if (!veiculos || !veiculos.length) {
             throw new Error('Nenhum veículo encontrado');
         }
 
-        console.log('Iniciando requisição para usuários...');
+        const responseUsuarios = await fetch('/api/reservas/usuariosDisponiveis', { method: 'GET' });
 
-        // Carrega os usuários para a reserva
-        const responseUsuarios = await fetch('/api/usuarios', { method: 'GET' });
+        if (!responseUsuarios.ok) {
+            throw new Error(`Erro ao carregar usuários: ${responseUsuarios.statusText}`);
+        }
+
         const usuariosData = await responseUsuarios.json();
-        console.log('Resposta de usuários:', usuariosData);
 
         const usuarios = Array.isArray(usuariosData) ? usuariosData : usuariosData.usuarios;
         if (!usuarios || !usuarios.length) {
@@ -46,7 +49,7 @@ document.getElementById('newItem').addEventListener('click', async () => {
                     <option value="">Selecione um cliente</option>
                     ${optionsUsuarios}
                 </select>
-                <br> <br>
+                <br><br>
                 <label>Data de Retirada</label>
                 <br>
                 <input type="date" id="data_retirada" class="swal2-input">
@@ -104,13 +107,13 @@ document.getElementById('newItem').addEventListener('click', async () => {
                         }
                         return response.json();
                     })
-                    .then(() => {
+                    .then(data => {
                         Swal.fire('Sucesso', 'Reserva criada com sucesso!', 'success');
                         carregarReservas(); // Recarrega a tabela de reservas
                     })
                     .catch((error) => {
+                        console.error('Erro ao criar reserva:', error);
                         Swal.fire('Erro', error.message || 'Ocorreu um erro ao criar a reserva.', 'error');
-                        console.error('Erro:', error);
                     });
             }
         });
@@ -119,9 +122,6 @@ document.getElementById('newItem').addEventListener('click', async () => {
         Swal.fire('Erro', 'Não foi possível abrir o modal de reserva.', 'error');
     }
 });
-
-
-
 
 // Função para carregar as reservas da API e preencher a tabela
 async function carregarReservas() {

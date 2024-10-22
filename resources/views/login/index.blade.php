@@ -23,6 +23,7 @@
             <p class="description description-second">Descubra a liberdade de dirigir o carro ideal – fácil, rápido e do seu jeito!</p>
 
             <form class="form" action="/api/usuarios" method="post">
+                @csrf
                 <label class="label-input" for="">
                     <i class="far fa-user icon-modify"></i>
                     <input name="nome" type="text" placeholder="Nome" required>

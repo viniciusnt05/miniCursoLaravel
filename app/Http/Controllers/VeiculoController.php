@@ -29,26 +29,23 @@ class VeiculoController extends Controller
     // Cria um novo veículo
     public function store(StoreUpdateVeiculoRequest $request)
     {
+        $veiculo = Veiculo::create($request->all());
+
+        // Salva o veículo para obter o ID
+        $veiculo->save();
+
         // Processa o upload da imagem, se houver
-        $imgPath = null;
         if ($request->hasFile('img') && $request->file('img')->isValid()) {
             $img = $request->file('img');
             $imgName = Str::slug($request->modelo) . '.' . $img->getClientOriginalExtension();
-            $imgPath = $img->storeAs('veiculos', $imgName, 'public'); // Salva em public/veiculos
+
+            // Define o caminho correto de armazenamento
+            $imgPath = $img->storeAs("veiculos/{$veiculo->id}", $imgName, 'public');
+
+            // Atualiza o caminho da imagem no veículo
+            $veiculo->img = "storage/veiculos/{$veiculo->id}/{$imgName}";
+            $veiculo->save();
         }
-
-        // Cria um novo veículo e atribui os campos
-        $veiculo = new Veiculo;
-        $veiculo->id_categoria = $request->id_categoria;
-        $veiculo->marca = $request->marca;
-        $veiculo->modelo = $request->modelo;
-        $veiculo->ano_fabricacao = $request->ano_fabricacao;
-        $veiculo->placa = $request->placa;
-        $veiculo->status = $request->status;
-        $veiculo->valor = $request->valor;
-        $veiculo->img = $imgPath; // Atribui o caminho da imagem
-
-        $veiculo->save();
 
         // Retorna a resposta JSON
         return response()->json($veiculo, 201);
