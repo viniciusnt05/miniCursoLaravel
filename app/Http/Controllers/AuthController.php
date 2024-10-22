@@ -34,6 +34,7 @@ class AuthController extends Controller
                     'id' => $usuario->id,
                     'nome' => $usuario->nome,
                     'email' => $usuario->email,
+                    'is_admin' => $usuario->tipo_usuario == 'admin' ? true : false,
                 ],
             ], 200);
         }

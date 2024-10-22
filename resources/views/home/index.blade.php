@@ -28,7 +28,7 @@
             <li><a href="#contact">Contate-nos</a></li>
         </ul>
         <div class="nav__btn">
-            <button class="btn" onclick="">Alugue agora</button>
+            <button id="rentBtn" class="btn" onclick="window.location.href = '/login'">Alugue agora</button>
         </div>
     </nav>
     <div class="header__container" id="home">
@@ -102,57 +102,6 @@
     </form>
 </section>
 
-<section class="section__container story__container">
-    <h2 class="section__header">STORIES BEHIND THE WHEEL</h2>
-    <div class="story__grid">
-        <div class="story__card">
-            <div class="story__date">
-                <span>12</span>
-                <div>
-                    <p>January</p>
-                    <p>2024</p>
-                </div>
-            </div>
-            <h4>Adventures on the Open Road</h4>
-            <p>
-                Join us as we dive into the exhilarating stories of travelers who
-                embarked on unforgettable journeys with PREMIUM CAR RENTAL.
-            </p>
-            <img src="{{ asset('assets/images/story-1.jpg') }}" alt="story" />
-        </div>
-        <div class="story__card">
-            <div class="story__date">
-                <span>04</span>
-                <div>
-                    <p>March</p>
-                    <p>2024</p>
-                </div>
-            </div>
-            <h4>Luxury and Comfort: Experiences</h4>
-            <p>
-                In this series, we highlight the luxurious touches, unparalleled
-                comfort, and exceptional service that make every ride.
-            </p>
-            <img src="{{ asset('assets/images/story-2.jpg') }}" alt="story" />
-        </div>
-        <div class="story__card">
-            <div class="story__date">
-                <span>18</span>
-                <div>
-                    <p>June</p>
-                    <p>2024</p>
-                </div>
-            </div>
-            <h4>Cars that Adapt to Your Lifestyle</h4>
-            <p>
-                Read about how our versatile vehicles have seamlessly integrated
-                into the lives of professionals and families alike.
-            </p>
-            <img src="{{ asset('assets/images/story-3.jpg') }}" alt="story" />
-        </div>
-    </div>
-</section>
-
 <section class="banner__container">
     <div class="banner__wrapper">
         <img src="{{ asset('assets/images/banner-1.png') }}" alt="banner" />
@@ -171,7 +120,7 @@
 <section class="download">
     <div class="section__container download__container">
         <div class="download__content">
-            <h2 class="section__header">PREMIUM CAR RENTAL</h2>
+            <h2 class="section__header">Aluguel Premium</h2>
             <div class="download__links">
                 <a href="#">
                     <img src="{{ asset('assets/images/apple.png') }}" alt="apple" />
@@ -190,12 +139,6 @@
 <section class="news" id="contact">
     <div class="section__container news__container">
         <h2 class="section__header">Stay up to date on all the latest news.</h2>
-        <form action="/">
-            <input type="text" placeholder="Your email" />
-            <button class="btn">
-                <i class="ri-send-plane-fill"></i>
-            </button>
-        </form>
     </div>
 </section>
 
@@ -250,5 +193,7 @@
 <script src="https://unpkg.com/scrollreveal"></script>
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script src="{{ asset('assets/js/main.js') }}"></script>
+<script src="{{ asset('assets/js/home.js') }}"></script>
+
 </body>
 </html>

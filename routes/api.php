@@ -14,6 +14,10 @@ Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanc
 
 
 //Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('/verify-token', function () {
+        return response()->json(['message' => 'Token válido'], 200);
+    });
+
     Route::prefix('/usuarios')->group(function () {
         Route::get('/', [UsuarioController::class, 'index']);
         Route::get('/{id}', [UsuarioController::class, 'show']);

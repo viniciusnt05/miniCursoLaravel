@@ -19,8 +19,6 @@
     </p>
 
     <form id="loginForm" class="form">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
-
         <label class="label-input">
             <input id="email" name="email" type="email" placeholder="Email" required>
         </label>
@@ -40,46 +38,7 @@
     </form>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function() {
-        // Manipula o envio do formulário de login usando AJAX
-        $('#loginForm').on('submit', function(e) {
-            e.preventDefault(); // Impede o envio padrão do formulário
-
-            // Obtém os valores dos campos
-            const email = $('#email').val();
-            const senha = $('#senha').val();
-
-            // Verifica se os campos estão preenchidos
-            if (!email || !senha) {
-                alert('Por favor, preencha todos os campos.');
-                return;
-            }
-
-            // Envia a requisição AJAX para a API de login
-            $.ajax({
-                url: '/api/login',
-                type: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                data: JSON.stringify({ email: email, senha: senha }),
-                success: function(response) {
-                    localStorage.setItem('token', response.token);
-                    window.location.href = '/home';
-                },
-                error: function(xhr) {
-                    if (xhr.status === 401) {
-                        alert('Credenciais inválidas. Por favor, tente novamente.');
-                    } else {
-                        alert('Ocorreu um erro. Tente novamente mais tarde.');
-                    }
-                }
-            });
-        });
-    });
-</script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{asset('assets/js/entrar.js')}}"></script>
 </body>
 </html>

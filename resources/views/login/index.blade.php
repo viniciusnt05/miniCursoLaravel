@@ -22,7 +22,7 @@
             <h2 class="title title-second">Ainda não é cliente?</h2>
             <p class="description description-second">Descubra a liberdade de dirigir o carro ideal – fácil, rápido e do seu jeito!</p>
 
-            <form class="form" action="/api/usuarios" method="post">
+            <form id="newUser" class="form">
                 <label class="label-input" for="">
                     <i class="far fa-user icon-modify"></i>
                     <input name="nome" type="text" placeholder="Nome" required>
@@ -55,6 +55,7 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{asset('assets/js/login.js')}}"></script>
 <script>
     function mascaraCpf(cpfInput) {
         // Remove caracteres que não são dígitos
