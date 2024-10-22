@@ -13,7 +13,7 @@
         <a href="#" class="brand">
             <img src="{{ asset('assets/images/logo_brand.svg') }}" alt="Logo">
         </a>
-        <h1>Olá user</h1>
+        <h1>Olá <span id="userName">user</span>!</h1>
         <ul class="side-menu top">
             <li class="active">
                 <a href="/admin">
@@ -48,7 +48,7 @@
         </ul>
         <ul class="side-menu">
             <li>
-                <a href="/home" class="logout">
+                <a href="/home" class="logout" id="logout">
                     <i class='bx bxs-log-out-circle' ></i>
                     <span class="text">Sair</span>
                 </a>
@@ -119,6 +119,8 @@
     </section>
 </body>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="{{ asset('assets/js/dashboard.js') }}"></script>
+<script src="{{ asset('assets/js/admin.js') }}"></script>
 
 </html>

@@ -4,7 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUpdateUsuarioRequest; // Importa a classe de requisição
 use App\Models\Usuario; // Importa o modelo Usuario
-use Illuminate\Support\Facades\Hash; // Importa a facade Hash para criptografar senhas
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Testing\Fluent\Concerns\Has;
+
+// Importa a facade Hash para criptografar senhas
 
 class UsuarioController extends Controller
 {
@@ -44,12 +49,12 @@ class UsuarioController extends Controller
     {
         try {
             $usuario = Usuario::create($request->all());
+            $usuario->senha = Hash::make($request->senha);
 
             // Salvando usuário no banco de dados
             $usuario->save();
 
-            // Redireciona para a página de login com uma mensagem de sucesso
-            return redirect()->to('/login/entrar')->with('success', 'Cadastro realizado com sucesso!');
+            return response()->json(['message' => 'Usuário criado com sucesso!'], 201);
         } catch (\Exception $e) {
             // Retorna uma resposta JSON com o erro caso ocorra uma exceção
             return response()->json(['error' => 'Erro ao cadastrar o usuário: ' . $e->getMessage()], 500);

@@ -2,9 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 
-//Route::get('/', function () {
-//    return view('welcome');
-//});
+Route::get('/', function () {
+    return view('welcome');
+});
 
 Route::get('/login', function () {
     return view('login.index');
@@ -14,12 +14,12 @@ Route::get('/login/entrar', function () {
     return view('login.entrar');
 });
 
+Route::get('/home', function () {
+    return view('home.index');
+});
+
 // Rotas protegidas pelo middleware 'auth:sanctum'
 //Route::middleware(['auth:sanctum'])->group(function () {
-    Route::get('/home', function () {
-        return view('home.index');
-    });
-
     Route::get('/admin', function () {
         return view('admin.index');
     });
@@ -39,8 +39,6 @@ Route::get('/login/entrar', function () {
     Route::get('/reservas', function () {
         return view('admin.reservas');
     });
-
-
 //});
 
 Route::get('/veiculo/detalhes', function () {
