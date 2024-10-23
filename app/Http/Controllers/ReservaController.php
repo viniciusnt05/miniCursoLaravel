@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ReservaResource;
 use App\Models\Reserva;
 use App\Http\Requests\StoreUpdateReservaRequest;
 use App\Models\Usuario;
@@ -15,7 +16,9 @@ class ReservaController extends Controller
     public function index()
     {
         // Filtra as reservas e busca as relações de usuário e veículo
-        $reservas = Reserva::with('usuario', 'veiculo')->get();
+//        $reservas = Reserva::with('usuario', 'veiculo')->get();
+
+        $reservas = Reserva::all();
 
         // Filtra apenas as reservas concluídas
         $reservasConcluidas = $reservas->where('status', 'concluida');
@@ -27,7 +30,8 @@ class ReservaController extends Controller
         $numero_total = $reservas->count();
 
         return response()->json([
-            'reservas' => $reservas,
+//            'reservas' => $reservas,
+            'reservas' => ReservaResource::collection($reservasConcluidas),
             'numero_total' => $numero_total,
             'valor_total_concluidas' => $valorTotalConcluidas,
         ]);

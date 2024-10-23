@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\VeiculoResource;
 use App\Models\Veiculo;
 use App\Http\Requests\StoreUpdateVeiculoRequest;
 use Illuminate\Support\Str;
@@ -10,10 +11,16 @@ use Illuminate\Support\Facades\Storage;
 class VeiculoController extends Controller
 {
     // Lista todos os veículos
+//    public function index()
+//    {
+//        $veiculos = Veiculo::with('categoria')->get();
+//        return response()->json($veiculos);
+//    }
+
     public function index()
     {
-        $veiculos = Veiculo::with('categoria')->get();
-        return response()->json($veiculos);
+        $veiculos = Veiculo::all();
+        return VeiculoResource::collection($veiculos);
     }
 
     // Mostra um veículo específico por ID

@@ -22,7 +22,7 @@ class Reserva extends Model
     ];
 
     // Relacionamento com o cliente (uma reserva pertence a um cliente)
-    public function usuario()
+    public function cliente()
     {
         return $this->belongsTo(Usuario::class, 'id_cliente');
     }
