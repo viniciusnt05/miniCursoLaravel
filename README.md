@@ -1,6 +1,3 @@
-<p align="center"><a href="" target="_blank"><img src="https://media.discordapp.net/attachments/553763037862166560/1298747750699106407/MiniCurso_Laravel.png?ex=671ab099&is=67195f19&hm=3d8006a328cf8cf2bee621844dafafd0e66b488dae07232cd29fded3b094920b&=&format=webp&quality=lossless" width="1173" height="660" alt="Banner MiniCurso"></a></p>
-
-
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
